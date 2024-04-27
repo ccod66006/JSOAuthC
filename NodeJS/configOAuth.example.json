@@ -1,0 +1,11 @@
+{
+    "hostname":"127.0.0.1",
+    "port":"8080",
+    "http":"http",
+    "tokenEndpoint":"/realms/testRealm/protocol/openid-connect/token",
+    "authEndpoint":"/realms/testRealm/protocol/openid-connect/auth",
+    "userinfoEndpoint":"/realms/testRealm/protocol/openid-connect/userinfo",
+    "client_id":"testclient",
+    "client_secret":"n3QJg24Wzubd490Je6b5s1lhiaJmqubK",
+    "scope":"openid email"
+}

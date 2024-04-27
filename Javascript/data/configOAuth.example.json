@@ -1,0 +1,11 @@
+{
+    "hostname":"",
+    "port":"8081",
+    "http":"http",
+    "tokenEndpoint":"/realms/medical-server/protocol/openid-connect/token",
+    "authEndpoint":"/realms/medical-server/protocol/openid-connect/auth",
+    "userinfoEndpoint":"/realms/medical-server/protocol/openid-connect/userinfo",
+    "client_id":"",
+    "client_secret":"",
+    "scope":"openid"
+}
