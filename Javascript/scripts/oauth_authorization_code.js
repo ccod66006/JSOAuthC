@@ -16,7 +16,7 @@ authTest();
  */
 async function auth() {
     OAuthConfig = await loadOAuthConfig("./data/configOAuth.json");
-    let theToken = getCookie("access_token");
+    let theToken = getLocalStorageItem("access_token");
     let searchParams = new URL(window.location.href).searchParams;
     let authCode = searchParams.get("code");
     let session_state = searchParams.get("session_state");
@@ -34,9 +34,9 @@ async function auth() {
     }
     // 無token或token驗證失敗 轉到keycloak登入並在Callback URL帶入目前網址
     else {
+        localStorage.removeItem("access_token");
         let redirectUri = removeURLParameter(window.location.href, "code");
         redirectUri = removeURLParameter(redirectUri, "session_state");
-        redirectUri = removeURLParameter(redirectUri, "iss");
         let loginPage = `${OAuthConfig.http}://${OAuthConfig.hostname}:${OAuthConfig.port}/${OAuthConfig.authEndpoint}?client_id=${OAuthConfig.client_id}&grant_type=authorization_code&response_type=code&redirect_uri=${redirectUri}`;
         window.location.href = loginPage;
         return false;
@@ -56,6 +56,20 @@ function getCookie(name) {
         return "";
     }
 }
+/**
+ * 讀取 LocalStorage
+ */
+function getLocalStorageItem(name) {
+    return localStorage.getItem(name) || "";
+}
+
+/**
+ * 設置 LocalStorage
+ */
+function setLocalStorageItem(name, value) {
+    localStorage.setItem(name, value);
+}
+
 
 /**
  * 叫keycloak伺服器檢查token是否正確
@@ -102,6 +116,7 @@ function requestToken(code, session_state) {
             let result = request.response;
             console.log(result);
             responseToken = result.access_token;
+            setSessionStorageItem("access_token", responseToken);
             resolve(responseToken);
         }
     });
